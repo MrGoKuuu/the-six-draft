@@ -1,0 +1,1 @@
+Real binary asset will be inserted by git blob/tree API.
