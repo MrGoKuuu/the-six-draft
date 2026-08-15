@@ -1,46 +1,30 @@
 # THE SIX — Draft Day
 
-Premium browser-based draft control room for THE SIX by God Syndicate.
+Production direction for the recurring THE SIX competitive draft event presented by God Syndicate.
 
-## Current build
+## Live project
+GitHub repository: https://github.com/MrGoKuuu/the-six-draft
 
-- Broadcast view
-- Host Console
-- Admin Control
-- Captain Control login demo
-- Start Draft gate
-- 10-second stress-test clock
-- Automatic turn advancement at 00:00
-- Balanced multi-team order with no back-to-back team turns
-- Player categories: Vanguard / Duelist / Strategist / Flex
-- Player Reserve unlocks after Round 1
-- Draft / Next / Reset controls
-- Face-down THE SIX card back
-- 3D card reveal
-- Placeholder player-card pool
-- Team roster status
+## Draft rules implemented in the current web build
+- Minimum 4 teams, scalable to 6.
+- Draft starts only after Admin Control is unlocked and START DRAFT is pressed.
+- Stress-test timer: 10 seconds. Tournament presets: 30, 60, 90 seconds.
+- A completed pick immediately advances the turn.
+- Timer expiry automatically advances the turn.
+- Rotating pick order avoids the traditional snake boundary double-pick advantage.
+- Player Reserve unlocks after Round 1.
+- Reserved players are protected from other teams.
+- A reserve skips the reserving team in the next round and gives that team the last compensation position in the following round.
+- Only the authenticated captain who owns the current turn, or Admin, can draft.
+- Captain Control can privately reveal cards while scouting.
+- Player View is intentionally removed from the current product direction.
 
-## Local test
+## Access
+- Admin access is entered through Admin Access and is protected by the private test code 1290.
+- Captain test codes are stored in the demo build and must be moved server-side before production.
 
-Run a static server from the repository root:
+## Assets
+The project includes the supplied THE SIX card back, supplied P001 player card artwork, and supplied Team Card reference visual. Additional production assets can be added as the player pool grows.
 
-```bash
-python3 -m http.server 8000
-```
-
-Then open `http://localhost:8000`.
-
-## Captain demo access
-
-- T01 / SIX-101
-- T02 / SIX-202
-- T03 / SIX-303
-- T04 / SIX-404
-
-## Important architecture note
-
-This repository is the production front-end foundation. The current demo state is browser-local so the interaction model can be stress-tested safely. A real tournament with multiple captains in different browsers will need a shared realtime backend and authenticated roles; that should be added before Draft Day rather than faking multiplayer with localStorage.
-
-## Asset replacement
-
-Put finished Player Card PNG/SVG files in `cards/` using IDs such as `P001.svg`, `P002.svg`, etc. The current build includes P001 and stress-test placeholders. Replace those assets without changing the UI code.
+## Current development mode
+The current repository is a front-end shared site deployed from `main`/`root`. The next production milestone is server-backed real-time draft state so multiple captains and the broadcast view share one authoritative session.
