@@ -1,0 +1,1 @@
+window.addEventListener('error',event=>{const el=event.target;if(el&&el.tagName==='IMG'&&el.getAttribute('src')?.includes('/cards/')){el.src='cards/player-placeholder.svg';el.onerror=null}},true);
