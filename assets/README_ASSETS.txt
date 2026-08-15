@@ -1,0 +1,1 @@
+Production art assets: the supplied THE SIX card back PNG and Player Card Test PNG should be stored here for the live app.
