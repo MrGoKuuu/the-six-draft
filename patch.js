@@ -1,6 +1,7 @@
 (function(){
-const REAL_BACK='assets/card-back-live.svg';
-const REAL_P001='cards/P001-live.svg';
+const RAW='https://raw.githubusercontent.com/MrGoKuuu/the-six-draft/main/';
+const REAL_BACK=RAW+'assets/card-back-live.svg';
+const REAL_P001=RAW+'cards/P001-live.svg';
 function safeRender(){try{if(typeof window.render==='function')window.render()}catch(e){console.error(e)}}
 function imgForPlayer(p){return p?.id==='P001'?REAL_P001:'assets/player-placeholder.svg'}
 function cardBack(){return REAL_BACK}
@@ -12,6 +13,6 @@ window.renderRosters=function(){return `<section class="rosterSection"><div clas
 window.renderPool=function(privateMode){const privatePid=state.privateReveals?.[state.captainTeam];const list=availablePlayers().filter(p=>state.filter==='ALL'||p.role===state.filter);return `<section class="panel poolPanel"><div class="panelhead"><div><h2>${privateMode?'PRIVATE SCOUTING POOL':'LIVE PLAYER POOL'}</h2><div class="eyebrow">${privateMode?'FACE-DOWN UNTIL YOU REVEAL':'AVAILABLE PLAYERS'}</div></div><span class="badge">${list.length} AVAILABLE</span></div><div class="filters">${ROLES.map(r=>`<button class="filter ${state.filter===r?'active':''}" data-filter="${r}">${r}</button>`).join('')}</div><div class="playerGrid">${list.map(p=>{const show=privateMode&&privatePid===p.id;return `<button class="playerCard ${state.target===p.id?'selected':''}" data-player="${p.id}"><img src="${show?imgForPlayer(p):cardBack()}" alt="${show?p.name:'Face-down card'}"><span>${p.number} • ${p.name}</span><small>${p.role}</small></button>`}).join('')}</div></section>`};
 const originalRender=window.render;
 window.render=function(){originalRender();setTimeout(bindPatch,0)};
-function bindPatch(){const a=document.getElementById('minus5');if(a)a.onclick=()=>adjustClock(-5);const b=document.getElementById('plus5');if(b)b.onclick=()=>adjustClock(5);const st=document.getElementById('start');if(st)st.onclick=()=>startDraft();const pa=document.getElementById('pause');if(pa)pa.onclick=()=>{state.paused=!state.paused;if(!state.paused&&state.started)state.deadline=Date.now()+state.remaining*1000;else state.deadline=null;safeRender()};const force=document.getElementById('force');if(force)force.onclick=()=>moveNext();const reset=document.getElementById('reset');if(reset)reset.onclick=()=>resetDraft();document.querySelectorAll('.proRoster img,.playerCard img,.face img').forEach(el=>{if(el.getAttribute('src')==='assets/card-back.svg')el.src=REAL_BACK;if(el.getAttribute('src')==='cards/P001.svg')el.src=REAL_P001})}
+function bindPatch(){const a=document.getElementById('minus5');if(a)a.onclick=()=>adjustClock(-5);const b=document.getElementById('plus5');if(b)b.onclick=()=>adjustClock(5);const st=document.getElementById('start');if(st)st.onclick=()=>startDraft();const pa=document.getElementById('pause');if(pa)pa.onclick=()=>{state.paused=!state.paused;if(!state.paused&&state.started)state.deadline=Date.now()+state.remaining*1000;else state.deadline=null;safeRender()};const force=document.getElementById('force');if(force)force.onclick=()=>moveNext();const reset=document.getElementById('reset');if(reset)reset.onclick=()=>resetDraft();document.querySelectorAll('.proRoster img,.playerCard img,.face img').forEach(el=>{if(el.getAttribute('src')==='assets/card-back.svg'||el.src.includes('card-back.svg'))el.src=REAL_BACK;if(el.getAttribute('src')==='cards/P001.svg'||el.src.includes('P001.svg'))el.src=REAL_P001})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindPatch);else bindPatch();
 })();
